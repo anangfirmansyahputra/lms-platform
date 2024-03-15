@@ -3,7 +3,12 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { LayoutDashboard } from "lucide-react";
 import { redirect } from "next/navigation";
-import { DescriptionForm, ImageForm, TitleForm } from "./_components";
+import {
+  CategoryForm,
+  DescriptionForm,
+  ImageForm,
+  TitleForm,
+} from "./_components";
 
 export default async function CourseIdPage({
   params,
@@ -20,6 +25,12 @@ export default async function CourseIdPage({
     where: {
       id: params.courseId,
       userId,
+    },
+  });
+
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: "asc",
     },
   });
 
@@ -59,6 +70,13 @@ export default async function CourseIdPage({
           <TitleForm initialData={course} />
           <DescriptionForm initialData={course} />
           <ImageForm initialData={course} />
+          <CategoryForm
+            initialData={course}
+            options={categories.map((category) => ({
+              label: category.name,
+              value: category.id,
+            }))}
+          />
         </div>
       </div>
     </div>
