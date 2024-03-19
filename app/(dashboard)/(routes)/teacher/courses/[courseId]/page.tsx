@@ -11,6 +11,7 @@ import { redirect } from "next/navigation";
 import {
   AttachmentForm,
   CategoryForm,
+  ChaptersForm,
   DescriptionForm,
   ImageForm,
   PriceForm,
@@ -34,6 +35,11 @@ export default async function CourseIdPage({
       userId,
     },
     include: {
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",
@@ -42,15 +48,15 @@ export default async function CourseIdPage({
     },
   });
 
+  if (!course) {
+    return redirect("/");
+  }
+
   const categories = await db.category.findMany({
     orderBy: {
       name: "asc",
     },
   });
-
-  if (!course) {
-    return redirect("/");
-  }
 
   const requiredFields = [
     course.title,
@@ -58,6 +64,7 @@ export default async function CourseIdPage({
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.chapters.some((chapter) => chapter.isPublished),
   ];
 
   const totalFields = requiredFields.length;
@@ -98,7 +105,7 @@ export default async function CourseIdPage({
               <IconBadge icon={ListChecks} />
               <h2 className="text-xl">Course chapters</h2>
             </div>
-            <div>TODO: Chapters</div>
+            <ChaptersForm initialData={course} />
           </div>
           <div>
             <div className="flex items-center gap-x-2">
