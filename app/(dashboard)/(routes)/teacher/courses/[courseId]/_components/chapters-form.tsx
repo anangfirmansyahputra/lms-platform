@@ -55,6 +55,7 @@ export default function ChaptersForm({ initialData }: ChaptersFormProps) {
       toast.success("Chapter created");
       toggleCreating();
       router.refresh();
+      form.reset();
     } catch (err) {
       toast.error("Something went wrong");
     }
@@ -82,7 +83,7 @@ export default function ChaptersForm({ initialData }: ChaptersFormProps) {
 
   return (
     <div className="relative mt-6 rounded-md border bg-slate-100 p-4">
-      {isUpdating && (
+      {isUpdating && initialData.chapters.length > 1 && (
         <div className="absolute right-0 top-0 flex h-full w-full items-center justify-center rounded-md bg-slate-500/20">
           <Loader2 className="h-6 w-6 animate-spin text-sky-700" />
         </div>
