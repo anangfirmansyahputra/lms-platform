@@ -23,7 +23,7 @@ export const getProgress = async (
         chapterId: {
           in: publishedChapterIds,
         },
-        isCompleated: true,
+        isCompleted: true,
       },
     });
 

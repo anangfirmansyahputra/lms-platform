@@ -3,6 +3,7 @@ import Link from "next/link";
 import IconBadge from "./icon-badge";
 import { BookOpen } from "lucide-react";
 import { formatPrice } from "@/lib/format";
+import CourseProgress from "./course-progress";
 
 interface CourseCardProps {
   id: string;
@@ -30,7 +31,7 @@ export default function CourseCard({
           <Image fill className="object-cover" alt={title} src={imageUrl} />
         </div>
         <div className="flex flex-col pt-2">
-          <div className="line-clamp-2 text-lg font-medium transition group-hover:text-orange-700 md:text-base">
+          <div className="line-clamp-2 text-lg font-medium transition group-hover:text-sky-600 md:text-base">
             {title}
           </div>
           <p className="text-xs text-muted-foreground">{category}</p>
@@ -43,7 +44,11 @@ export default function CourseCard({
             </div>
           </div>
           {progress !== null ? (
-            <div>TODO: PROGRESS COMPONENT</div>
+            <CourseProgress
+              value={progress}
+              size="sm"
+              variant={progress === 100 ? "success" : "default"}
+            />
           ) : (
             <p className="text-md font-medium text-slate-700 md:text-sm">
               {formatPrice(price)}
