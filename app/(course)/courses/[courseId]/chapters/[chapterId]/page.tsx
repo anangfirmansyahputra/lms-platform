@@ -78,15 +78,15 @@ export default async function ChapterIdPage({
           {!!attachhments.length && (
             <>
               <Separator />
-              <div className="p-4">
+              <div className="space-y-2 p-4">
                 {attachhments.map((attachhment) => (
                   <a
                     href={attachhment.url}
                     target="_blank"
                     key={attachhment.id}
-                    className="vg-sky-200 flex w-full items-center rounded-md border p-3 text-sky-700 hover:underline"
+                    className="flex w-full items-center rounded-md border bg-primary-foreground p-3 text-primary hover:underline"
                   >
-                    <File />
+                    <File className="mr-2" />
                     <p className="line-clamp-1">{attachhment.name}</p>
                   </a>
                 ))}
